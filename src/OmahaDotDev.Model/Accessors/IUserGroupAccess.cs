@@ -1,0 +1,4 @@
+﻿namespace OmahaDotDev.Model.Accessors
+{
+
+}
