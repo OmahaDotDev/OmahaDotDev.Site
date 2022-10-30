@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hero4Hire.Framework", "Hero4Hire.Framework\Hero4Hire.Framework.csproj", "{41FC82EA-85EA-4880-856C-C6007EA1E804}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmahaDotDev.Model", "OmahaDotDev.Model\OmahaDotDev.Model.csproj", "{C248C69B-67C0-49D8-B970-6E276D36323D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmahaDotDev.ResourceAccess", "OmahaDotDev.ResourceAccess\OmahaDotDev.ResourceAccess.csproj", "{23D5A6E1-9BB0-49DF-9B85-C9B84A3996CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmahaDotDev.Manager", "OmahaDotDev.Manager\OmahaDotDev.Manager.csproj", "{CF820E27-ECE0-4387-9B39-FA90D268CC7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmahaDotDev.WebSite", "OmahaDotDev.WebSite\OmahaDotDev.WebSite.csproj", "{61C17C0A-378D-43AA-907C-5A24777B7FA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.00-Clients", "01.00-Clients", "{116A1201-4670-4EC9-B218-553DBAF323F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.00-Managers", "02.00-Managers", "{3837E3F9-EA57-424A-96D6-35EB41648C28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.00-Model", "03.00-Model", "{81DB85F4-D825-4E91-B5B1-513DF007D35F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.00-Engines", "04.00-Engines", "{10342626-2E12-4AB5-89B6-2122603B9A75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05.00-ResourceAccess", "05.00-ResourceAccess", "{5D957F69-D982-48E1-B22D-DE9CF6D3AC88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06.00-Utilities", "06.00-Utilities", "{1EC99651-2ED9-4C02-BE42-D2822570F144}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hero4Hire.TimeUtility", "Hero4Hire.TimeUtility\Hero4Hire.TimeUtility.csproj", "{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41FC82EA-85EA-4880-856C-C6007EA1E804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41FC82EA-85EA-4880-856C-C6007EA1E804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41FC82EA-85EA-4880-856C-C6007EA1E804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41FC82EA-85EA-4880-856C-C6007EA1E804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C248C69B-67C0-49D8-B970-6E276D36323D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C248C69B-67C0-49D8-B970-6E276D36323D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C248C69B-67C0-49D8-B970-6E276D36323D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C248C69B-67C0-49D8-B970-6E276D36323D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23D5A6E1-9BB0-49DF-9B85-C9B84A3996CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23D5A6E1-9BB0-49DF-9B85-C9B84A3996CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23D5A6E1-9BB0-49DF-9B85-C9B84A3996CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23D5A6E1-9BB0-49DF-9B85-C9B84A3996CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF820E27-ECE0-4387-9B39-FA90D268CC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF820E27-ECE0-4387-9B39-FA90D268CC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF820E27-ECE0-4387-9B39-FA90D268CC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF820E27-ECE0-4387-9B39-FA90D268CC7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61C17C0A-378D-43AA-907C-5A24777B7FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61C17C0A-378D-43AA-907C-5A24777B7FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61C17C0A-378D-43AA-907C-5A24777B7FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61C17C0A-378D-43AA-907C-5A24777B7FA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{41FC82EA-85EA-4880-856C-C6007EA1E804} = {1EC99651-2ED9-4C02-BE42-D2822570F144}
+		{C248C69B-67C0-49D8-B970-6E276D36323D} = {81DB85F4-D825-4E91-B5B1-513DF007D35F}
+		{23D5A6E1-9BB0-49DF-9B85-C9B84A3996CB} = {5D957F69-D982-48E1-B22D-DE9CF6D3AC88}
+		{CF820E27-ECE0-4387-9B39-FA90D268CC7C} = {3837E3F9-EA57-424A-96D6-35EB41648C28}
+		{61C17C0A-378D-43AA-907C-5A24777B7FA6} = {116A1201-4670-4EC9-B218-553DBAF323F5}
+		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB} = {1EC99651-2ED9-4C02-BE42-D2822570F144}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {910E1D34-0D08-4DD2-979E-B8986863599D}
+	EndGlobalSection
+EndGlobal

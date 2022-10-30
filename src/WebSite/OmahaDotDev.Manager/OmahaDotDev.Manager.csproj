@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hero4Hire.Framework\Hero4Hire.Framework.csproj" />
+    <ProjectReference Include="..\OmahaDotDev.Model\OmahaDotDev.Model.csproj" />
+    <ProjectReference Include="..\OmahaDotDev.ResourceAccess\OmahaDotDev.ResourceAccess.csproj" />
+  </ItemGroup>
+
+</Project>

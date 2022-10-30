@@ -1,4 +1,0 @@
-﻿namespace OmahaDotDev.Model.Accessors
-{
-
-}
