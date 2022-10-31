@@ -1,6 +1,6 @@
 ﻿namespace OmahaDotDev.Model.Accessors.Group
 {
-    public record CreateGroupRequest(string Name, string DomainName)
+    public record CreateGroupRequest(string Name, IEnumerable<string> DomainNames)
     {
 
     }

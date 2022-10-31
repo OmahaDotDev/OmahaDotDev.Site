@@ -9,5 +9,10 @@ namespace OmahaDotDev.WebSite.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("identity");
+        }
     }
 }

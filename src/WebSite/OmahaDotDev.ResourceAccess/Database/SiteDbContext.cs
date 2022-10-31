@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using OmahaDotDev.Model;
+using OmahaDotDev.Model.Common;
 using OmahaDotDev.ResourceAccess.Database.Entities;
 
 namespace OmahaDotDev.ResourceAccess.Database
@@ -15,9 +15,14 @@ namespace OmahaDotDev.ResourceAccess.Database
             _ambientContext = ambientContext;
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("groups");
+        }
+
         public DbSet<GroupRecord> Groups { get; set; }
         public DbSet<MemberRecord> Members { get; set; }
-
+        public DbSet<GroupDomainName> GroupDomainNames { get; set; }
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = new CancellationToken())

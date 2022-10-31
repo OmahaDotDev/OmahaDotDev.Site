@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OmahaDotDev.Model.Common;
-using OmahaDotDev.Model.Exceptions;
+using OmahaDotDev.Model.Common.Exceptions;
 using System.Linq.Expressions;
 
 namespace OmahaDotDev.ResourceAccess.Database

@@ -1,4 +1,4 @@
-﻿namespace OmahaDotDev.Model.Exceptions
+﻿namespace OmahaDotDev.Model.Common.Exceptions
 {
     public class NotFoundException : Exception
     {

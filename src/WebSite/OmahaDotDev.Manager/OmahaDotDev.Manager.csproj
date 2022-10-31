@@ -6,8 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\Hero4Hire.Framework\Hero4Hire.Framework.csproj" />
+    <ProjectReference Include="..\Hero4Hire.TimeUtility\Hero4Hire.TimeUtility.csproj" />
     <ProjectReference Include="..\OmahaDotDev.Model\OmahaDotDev.Model.csproj" />
     <ProjectReference Include="..\OmahaDotDev.ResourceAccess\OmahaDotDev.ResourceAccess.csproj" />
   </ItemGroup>

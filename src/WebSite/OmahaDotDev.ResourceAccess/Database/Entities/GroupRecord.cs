@@ -2,14 +2,14 @@
 {
     internal class GroupRecord : AuditableEntity
     {
-        public GroupRecord(string name, string domainName)
+        public GroupRecord(string name)
         {
             Name = name;
-            DomainName = domainName;
         }
+
         public int Id { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        public bool IsActive { get; set; } = true;
         public string Name { get; set; }
-        public string DomainName { get; set; }
+        public IEnumerable<GroupDomainName> DomainNames { get; set; } = new List<GroupDomainName>();
     }
 }
