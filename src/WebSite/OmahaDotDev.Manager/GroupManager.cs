@@ -5,7 +5,7 @@ using OmahaDotDev.Model.Common;
 
 namespace OmahaDotDev.Manager
 {
-    public class GroupManager : ManagerBase<AmbientContext>, IGroupManager
+    internal class GroupManager : ManagerBase<AmbientContext>, IGroupManager
     {
         private readonly IGroupAdminResourceAccess _groupAdminResourceAccess;
         public GroupManager(AmbientContext ambientContext, ServiceFactory<AmbientContext> serviceFactory)
@@ -16,16 +16,14 @@ namespace OmahaDotDev.Manager
 
         public async Task<ApiGroupResponse> CreateGroup(ApiCreateGroupRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var accessorRequest = new CreateGroupRequest(request.Name, request.DomainNames);
+            var accessorResult = await _groupAdminResourceAccess.CreateGroup(accessorRequest, cancellationToken);
+            var apiResult = new ApiGroupResponse(accessorResult.Name, accessorResult.DomainNames)
+            {
+                Id = accessorResult.Id,
+            };
 
-            //var accessRequest = new CreateGroupRequest(request.Name, request.DomainName);
-
-            //var accessResult = await _groupAdminResourceAccess.CreateGroup(accessRequest, cancellationToken);
-
-            //return new ApiGroupResponse(accessResult.Name, accessResult.DomainNames)
-            //{
-            //    Id = accessResult.Id,
-            //};
+            return apiResult;
         }
 
         public Task DeleteGroup(ApiDeleteGroupRequest request, CancellationToken cancellationToken)

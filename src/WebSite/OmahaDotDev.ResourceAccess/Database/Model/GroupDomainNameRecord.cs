@@ -1,8 +1,8 @@
-﻿namespace OmahaDotDev.ResourceAccess.Database.Entities
+﻿namespace OmahaDotDev.ResourceAccess.Database.Model
 {
-    internal class GroupDomainName : AuditableEntity
+    class GroupDomainNameRecord : AuditableEntity
     {
-        public GroupDomainName(string domainName)
+        public GroupDomainNameRecord(string domainName)
         {
             DomainName = domainName;
 

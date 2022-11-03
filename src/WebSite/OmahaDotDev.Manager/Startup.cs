@@ -19,6 +19,7 @@ namespace OmahaDotDev.Manager
         public static IEndpointRouteBuilder MapManager(this IEndpointRouteBuilder app)
         {
             app.MapGet("/", () => "Hello World!");
+            // app.MapPost("/", async (PublicContract.IGroupManager manager) => manager.CreateGroup());
             return app;
         }
 

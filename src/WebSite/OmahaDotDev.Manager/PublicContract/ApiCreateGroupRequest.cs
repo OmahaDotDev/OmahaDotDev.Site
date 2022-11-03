@@ -1,6 +1,6 @@
 ﻿namespace OmahaDotDev.Manager.PublicContract
 {
-    public record ApiCreateGroupRequest(string Name, string DomainName)
+    public record ApiCreateGroupRequest(string Name, IEnumerable<string> DomainNames)
     {
 
     }

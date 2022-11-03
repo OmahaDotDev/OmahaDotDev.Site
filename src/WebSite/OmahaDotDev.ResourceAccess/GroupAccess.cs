@@ -4,7 +4,7 @@ using OmahaDotDev.Model.Accessors.Group;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.Model.Common.Exceptions;
 using OmahaDotDev.ResourceAccess.Database;
-using OmahaDotDev.ResourceAccess.Database.Entities;
+using OmahaDotDev.ResourceAccess.Database.Model;
 
 namespace OmahaDotDev.ResourceAccess
 {
@@ -21,7 +21,7 @@ namespace OmahaDotDev.ResourceAccess
         {
             var dbRecord = new GroupRecord(request.Name)
             {
-                DomainNames = request.DomainNames.Select(dn => new GroupDomainName(dn))
+                DomainNames = request.DomainNames.Select(dn => new GroupDomainNameRecord(dn))
             };
 
             await _dbContext.Groups.AddAsync(dbRecord, cancellationToken);

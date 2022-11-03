@@ -1,6 +1,6 @@
-﻿namespace OmahaDotDev.ResourceAccess.Database.Entities
+﻿namespace OmahaDotDev.ResourceAccess.Database.Model
 {
-    internal class AuditableEntity
+    class AuditableEntity
     {
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }

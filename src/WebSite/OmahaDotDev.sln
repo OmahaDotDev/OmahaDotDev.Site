@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05.00-ResourceAccess", "05.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06.00-Utilities", "06.00-Utilities", "{1EC99651-2ED9-4C02-BE42-D2822570F144}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hero4Hire.TimeUtility", "Hero4Hire.TimeUtility\Hero4Hire.TimeUtility.csproj", "{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hero4Hire.TimeUtility", "Hero4Hire.TimeUtility\Hero4Hire.TimeUtility.csproj", "{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

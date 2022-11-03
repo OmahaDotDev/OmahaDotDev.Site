@@ -1,6 +1,6 @@
-﻿namespace OmahaDotDev.ResourceAccess.Database.Entities
+﻿namespace OmahaDotDev.ResourceAccess.Database.Model
 {
-    internal class MemberRecord
+    class MemberRecord
     {
         public MemberRecord(string userId)
         {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OmahaDotDev.ResourceAccess.Database.Entities;
+using OmahaDotDev.ResourceAccess.Database.Model;
 
 namespace OmahaDotDev.ResourceAccess.Database.Config
 {

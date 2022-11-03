@@ -1,6 +1,6 @@
-﻿namespace OmahaDotDev.ResourceAccess.Database.Entities
+﻿namespace OmahaDotDev.ResourceAccess.Database.Model
 {
-    internal class GroupRecord : AuditableEntity
+    class GroupRecord : AuditableEntity
     {
         public GroupRecord(string name)
         {
@@ -10,6 +10,6 @@
         public int Id { get; set; }
         public bool IsActive { get; set; } = true;
         public string Name { get; set; }
-        public IEnumerable<GroupDomainName> DomainNames { get; set; } = new List<GroupDomainName>();
+        public IEnumerable<GroupDomainNameRecord> DomainNames { get; set; } = new List<GroupDomainNameRecord>();
     }
 }
