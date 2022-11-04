@@ -17,7 +17,7 @@ namespace OmahaDotDev.ResourceAccess
                     configuration.dbConnectionString,
                     b => b.MigrationsAssembly(typeof(SiteDbContext).Assembly.FullName)));
 
-            services.AddScoped<IGroupAdminResourceAccess>(provider => provider.GetRequiredService<GroupAccess>());
+            services.AddScoped<IGroupAdminResourceAccess, GroupAccess>();
 
 
             return services;

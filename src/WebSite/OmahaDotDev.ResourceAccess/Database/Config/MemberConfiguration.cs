@@ -12,6 +12,8 @@ namespace OmahaDotDev.ResourceAccess.Database.Config
                 .HasMany(m => m.CreatedGroups).WithOne(g => g.CreatedByUser);
             builder
                 .HasMany(m => m.UpdatedGroups).WithOne(g => g.UpdatedByUser);
+
+            builder.HasKey(m => m.UserId);
         }
     }
 }

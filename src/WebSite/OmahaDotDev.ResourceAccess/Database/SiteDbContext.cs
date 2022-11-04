@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.ResourceAccess.Database.Model;
+using System.Reflection;
 
 namespace OmahaDotDev.ResourceAccess.Database
 {
@@ -17,6 +18,8 @@ namespace OmahaDotDev.ResourceAccess.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.HasDefaultSchema("groups");
         }
 

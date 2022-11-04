@@ -4,6 +4,8 @@ using OmahaDotDev.Manager;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.WebSite.Data;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +19,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 
 builder.Services.AddManager(new SiteConfiguration(connectionString));
+
+
 
 var app = builder.Build();
 

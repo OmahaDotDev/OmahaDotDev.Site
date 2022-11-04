@@ -8,7 +8,7 @@ namespace OmahaDotDev.ResourceAccess.Database.Config
     {
         public void Configure(EntityTypeBuilder<GroupRecord> builder)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }
