@@ -21,7 +21,7 @@ namespace OmahaDotDev.ResourceAccess
         {
             var dbRecord = new GroupRecord(request.Name)
             {
-                DomainNames = request.DomainNames.Select(dn => new GroupDomainNameRecord(dn))
+                DomainNames = request.DomainNames.Select(dn => new GroupDomainNameRecord(dn)).ToList()
             };
 
             await _dbContext.Groups.AddAsync(dbRecord, cancellationToken);

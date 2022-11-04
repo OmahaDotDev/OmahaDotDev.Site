@@ -12,7 +12,7 @@ using OmahaDotDev.ResourceAccess.Database;
 namespace OmahaDotDev.ResourceAccess.Database.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20221104015439_InitialMigration")]
+    [Migration("20221104145235_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -112,14 +112,20 @@ namespace OmahaDotDev.ResourceAccess.Database.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Members", "groups");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1"
+                        });
                 });
 
             modelBuilder.Entity("OmahaDotDev.ResourceAccess.Database.Model.GroupDomainNameRecord", b =>
                 {
                     b.HasOne("OmahaDotDev.ResourceAccess.Database.Model.MemberRecord", "CreatedByUser")
-                        .WithMany()
+                        .WithMany("CreatedGroupDomainNames")
                         .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("OmahaDotDev.ResourceAccess.Database.Model.GroupRecord", "Group")
@@ -129,9 +135,9 @@ namespace OmahaDotDev.ResourceAccess.Database.Migrations
                         .IsRequired();
 
                     b.HasOne("OmahaDotDev.ResourceAccess.Database.Model.MemberRecord", "UpdatedByUser")
-                        .WithMany()
+                        .WithMany("UpdatedGroupDomainNames")
                         .HasForeignKey("UpdatedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CreatedByUser");
@@ -146,13 +152,13 @@ namespace OmahaDotDev.ResourceAccess.Database.Migrations
                     b.HasOne("OmahaDotDev.ResourceAccess.Database.Model.MemberRecord", "CreatedByUser")
                         .WithMany("CreatedGroups")
                         .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("OmahaDotDev.ResourceAccess.Database.Model.MemberRecord", "UpdatedByUser")
                         .WithMany("UpdatedGroups")
                         .HasForeignKey("UpdatedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CreatedByUser");
@@ -167,7 +173,11 @@ namespace OmahaDotDev.ResourceAccess.Database.Migrations
 
             modelBuilder.Entity("OmahaDotDev.ResourceAccess.Database.Model.MemberRecord", b =>
                 {
+                    b.Navigation("CreatedGroupDomainNames");
+
                     b.Navigation("CreatedGroups");
+
+                    b.Navigation("UpdatedGroupDomainNames");
 
                     b.Navigation("UpdatedGroups");
                 });

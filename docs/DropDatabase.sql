@@ -1,0 +1,4 @@
+ALTER DATABASE "aspnet-OmahaDotDev.WebSite-53bc9b9d-9d6a-45d4-8429-2a2761773502" SET SINGLE_USER WITH ROLLBACK 
+IMMEDIATE
+GO
+drop database "aspnet-OmahaDotDev.WebSite-53bc9b9d-9d6a-45d4-8429-2a2761773502"

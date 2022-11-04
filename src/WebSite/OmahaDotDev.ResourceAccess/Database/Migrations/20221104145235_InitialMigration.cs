@@ -48,15 +48,13 @@ namespace OmahaDotDev.ResourceAccess.Database.Migrations
                         column: x => x.CreatedByUserId,
                         principalSchema: "groups",
                         principalTable: "Members",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_Groups_Members_UpdatedByUserId",
                         column: x => x.UpdatedByUserId,
                         principalSchema: "groups",
                         principalTable: "Members",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -88,16 +86,20 @@ namespace OmahaDotDev.ResourceAccess.Database.Migrations
                         column: x => x.CreatedByUserId,
                         principalSchema: "groups",
                         principalTable: "Members",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_GroupDomainNames_Members_UpdatedByUserId",
                         column: x => x.UpdatedByUserId,
                         principalSchema: "groups",
                         principalTable: "Members",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                 });
+
+            migrationBuilder.InsertData(
+                schema: "groups",
+                table: "Members",
+                column: "UserId",
+                value: "1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupDomainNames_CreatedByUserId",

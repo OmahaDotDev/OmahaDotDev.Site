@@ -8,10 +8,10 @@ namespace OmahaDotDev.ResourceAccess.Database.Config
     {
         public void Configure(EntityTypeBuilder<MemberRecord> builder)
         {
-            builder
-                .HasMany(m => m.CreatedGroups).WithOne(g => g.CreatedByUser);
-            builder
-                .HasMany(m => m.UpdatedGroups).WithOne(g => g.UpdatedByUser);
+            //builder
+            //    .HasMany(m => m.CreatedGroups).WithOne(g => g.CreatedByUser).OnDelete(DeleteBehavior.NoAction);
+            //builder
+            //    .HasMany(m => m.UpdatedGroups).WithOne(g => g.UpdatedByUser).OnDelete(DeleteBehavior.NoAction);
 
             builder.HasKey(m => m.UserId);
         }

@@ -8,7 +8,13 @@ namespace OmahaDotDev.ResourceAccess.Database.Config
     {
         public void Configure(EntityTypeBuilder<GroupRecord> builder)
         {
-            // throw new NotImplementedException();
+            builder
+                .HasOne(g => g.CreatedByUser).WithMany(m => m.CreatedGroups).OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasOne(g => g.UpdatedByUser).WithMany(m => m.UpdatedGroups).OnDelete(DeleteBehavior.NoAction);
+
+
         }
     }
 }

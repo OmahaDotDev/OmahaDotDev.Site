@@ -21,6 +21,9 @@ namespace OmahaDotDev.ResourceAccess.Database
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.HasDefaultSchema("groups");
+
+
+            modelBuilder.Entity<MemberRecord>().HasData(new MemberRecord("1"));
         }
 
         public DbSet<GroupRecord> Groups { get; set; }
