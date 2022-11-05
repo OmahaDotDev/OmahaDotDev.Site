@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -9,16 +9,55 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="nswag.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="nswag.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.0-rc.2.22476.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0-rc.2.22476.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.0-rc.2.22476.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0-rc.2.22472.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0-rc.2.22472.11" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+
+    <PackageReference Include="NSwag.AspNetCore" Version="13.17.0" />
+
+    <PackageReference Include="NSwag.CodeGeneration.TypeScript" Version="13.17.0" />
+
+    <PackageReference Include="NSwag.MSBuild" Version="13.17.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OmahaDotDev.Manager\OmahaDotDev.Manager.csproj" />
   </ItemGroup>
+
+	<!--Having trouble getting .net 7  to support the build tasks.  Will try back later-->
+<!--<Target Name="NSwag" AfterTargets="Build">
+	--><!--<Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
+	<Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe) aspnetcore2openapi /assembly:$(TargetDir)OmahaDotDev.WebSite.dll /output:swagger.json" />--><!--
+
+	<Exec Command="$(NSwagExe) run nswag.json /variables:Configuration=$(Configuration) /runtime:WinX64" />
+	<Exec Command="$(NSwagExe) openapi2tsclient /input:swagger.json /output:Scripts/MyController.ts" />
+	--><!--<RemoveDir Directories="$(OutDir)References" />--><!--
+</Target>-->
+
+
+	<!--<PropertyGroup>
+		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+	</PropertyGroup>
+
+	<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
+		<Exec WorkingDirectory="$(ProjectDir)" 
+			  EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" 
+			  Command="$(NSwagExe_Net60) run nswag.json /variables:Configuration=$(Configuration)" />
+	</Target>-->
 
 </Project>

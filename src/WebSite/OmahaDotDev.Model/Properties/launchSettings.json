@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "OmahaDotDev.Model": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61508;http://localhost:61510"
+    }
+  }
+}

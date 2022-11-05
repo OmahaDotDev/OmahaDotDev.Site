@@ -34,7 +34,7 @@ namespace OmahaDotDev.Manager
 
         public static IEndpointRouteBuilder MapManager(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/", () => "Hello Worldd!");
+            app.MapGet("/", () => "Hello Worldd!").WithName("what");
             app.MapGroupManagerRoutes();
             return app;
         }

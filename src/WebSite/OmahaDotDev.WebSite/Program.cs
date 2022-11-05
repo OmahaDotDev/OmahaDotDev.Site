@@ -5,7 +5,6 @@ using OmahaDotDev.Model.Common;
 using OmahaDotDev.WebSite.Data;
 
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +19,14 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddManager(new SiteConfiguration(connectionString));
 
+#region support for NSwag 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApiDocument(doc =>
+{
+    doc.Version = "v1";
+    doc.Title = "wut";
+});
+#endregion 
 
 
 var app = builder.Build();
@@ -43,8 +50,16 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+
+#region NSwag support
+app.UseOpenApi();
+app.UseSwaggerUi3();
+#endregion
+
 
 app.MapManager();
+app.MapRazorPages();
+
+
 
 app.Run();
