@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.00-Docs", "00.00-Docs", 
 		..\..\docs\WebsiteReadme.md = ..\..\docs\WebsiteReadme.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmahaDotDev.Manager.Tests", "OmahaDotDev.Manager.Tests\OmahaDotDev.Manager.Tests.csproj", "{E258B023-9E08-49E1-91D2-AEB2AE099906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E258B023-9E08-49E1-91D2-AEB2AE099906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E258B023-9E08-49E1-91D2-AEB2AE099906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E258B023-9E08-49E1-91D2-AEB2AE099906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E258B023-9E08-49E1-91D2-AEB2AE099906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{CF820E27-ECE0-4387-9B39-FA90D268CC7C} = {3837E3F9-EA57-424A-96D6-35EB41648C28}
 		{61C17C0A-378D-43AA-907C-5A24777B7FA6} = {116A1201-4670-4EC9-B218-553DBAF323F5}
 		{8D3A80A6-5419-4C2A-9FD9-D5CA0ACFD0BB} = {1EC99651-2ED9-4C02-BE42-D2822570F144}
+		{E258B023-9E08-49E1-91D2-AEB2AE099906} = {3837E3F9-EA57-424A-96D6-35EB41648C28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {910E1D34-0D08-4DD2-979E-B8986863599D}
