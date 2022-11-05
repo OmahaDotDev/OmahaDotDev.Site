@@ -1,10 +1,24 @@
 ﻿using Hero4Hire.Framework;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using OmahaDotDev.Manager.PublicContract;
 using OmahaDotDev.Model.Accessors.Group;
 using OmahaDotDev.Model.Common;
 
 namespace OmahaDotDev.Manager
 {
+    public static class GroupManagerStartup
+    {
+        public static IEndpointRouteBuilder MapGroupManagerRoutes(this IEndpointRouteBuilder app)
+        {
+            app.MapPost("/Groups",
+                async (ApiCreateGroupRequest request, IGroupManager manager, CancellationToken token) =>
+                await manager.CreateGroup(request, token));
+            return app;
+        }
+    }
+
+
     internal class GroupManager : ManagerBase<AmbientContext>, IGroupManager
     {
         private readonly IGroupAdminResourceAccess _groupAdminResourceAccess;

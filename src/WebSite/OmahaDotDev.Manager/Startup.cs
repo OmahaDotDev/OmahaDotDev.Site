@@ -35,8 +35,7 @@ namespace OmahaDotDev.Manager
         public static IEndpointRouteBuilder MapManager(this IEndpointRouteBuilder app)
         {
             app.MapGet("/", () => "Hello Worldd!");
-            app.MapPost("/",
-                async (ApiCreateGroupRequest request, CancellationToken token, IGroupManager manager) => await manager.CreateGroup(request, token));
+            app.MapGroupManagerRoutes();
             return app;
         }
 
