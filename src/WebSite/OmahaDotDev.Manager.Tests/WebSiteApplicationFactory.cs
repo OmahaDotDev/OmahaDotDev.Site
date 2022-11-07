@@ -4,13 +4,13 @@ using Microsoft.Extensions.Hosting;
 
 namespace OmahaDotDev.Manager.Tests
 {
-    internal class TestApplication : WebApplicationFactory<OmahaDotDev.WebSite.Program>
+    public class WebSiteApplicationFactory : WebApplicationFactory<WebSite.Program>
     {
-        private readonly string _environment;
+        private readonly string _environment = "Development";
 
-        public TestApplication(string environment = "Development")
+        public WebSiteApplicationFactory()
         {
-            _environment = environment;
+
         }
 
         protected override IHost CreateHost(IHostBuilder builder)
@@ -37,6 +37,9 @@ namespace OmahaDotDev.Manager.Tests
 
             return base.CreateHost(builder);
         }
+
+
+
 
 
     }
