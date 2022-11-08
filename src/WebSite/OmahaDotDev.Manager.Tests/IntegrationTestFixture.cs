@@ -8,7 +8,7 @@ using Respawn;
 
 [assembly: CollectionBehavior(CollectionBehavior.CollectionPerAssembly, DisableTestParallelization = true)]
 
-
+//https://github.com/JonPSmith/EfCore.TestSupport
 
 namespace OmahaDotDev.Manager.Tests
 {
