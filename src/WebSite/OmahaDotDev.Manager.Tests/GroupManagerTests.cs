@@ -28,6 +28,7 @@ namespace OmahaDotDev.Manager.Tests
             return Task.CompletedTask;
         }
 
+
         public GroupManagerTests(IntegrationTestFixture testFixture)
         {
             _webSiteApplicationFactory = testFixture.WebSiteApplicationFactory;

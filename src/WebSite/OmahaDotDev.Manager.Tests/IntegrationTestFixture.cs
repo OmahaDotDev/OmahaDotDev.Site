@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OmahaDotDev.Model.Common;
 using OmahaDotDev.ResourceAccess.Database;
 using OmahaDotDev.ResourceAccess.Database.Model;
 using OmahaDotDev.WebSite.Data;
@@ -21,6 +22,8 @@ namespace OmahaDotDev.Manager.Tests
         private readonly string _dbConnectionString;
         private Respawner _respawner = null!;
 
+        private AmbientContext _currentAmbientContext;
+
         public IntegrationTestFixture()
         {
             WebSiteApplicationFactory = new WebSiteApplicationFactory();
@@ -28,6 +31,7 @@ namespace OmahaDotDev.Manager.Tests
             _identityDb = _scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
             _siteDb = _scope.ServiceProvider.GetRequiredService<SiteDbContext>();
             _dbConnectionString = _siteDb.Database.GetDbConnection().ConnectionString;
+
         }
         public void Dispose()
         {
@@ -45,6 +49,8 @@ namespace OmahaDotDev.Manager.Tests
         {
             await _respawner.ResetAsync(_dbConnectionString);
         }
+
+
 
         public async Task InitializeAsync()
         {
@@ -67,6 +73,8 @@ namespace OmahaDotDev.Manager.Tests
             var result = await _userManager.CreateAsync(newUser);
             _siteDb.Add(new MemberRecord(newUser.Id));
             return newUser.Id;
+
+            //return "";
         }
     }
 }

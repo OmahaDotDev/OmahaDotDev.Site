@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Hosting;
+using OmahaDotDev.Model.Common;
 
 namespace OmahaDotDev.Manager.Tests
 {
     public class WebSiteApplicationFactory : WebApplicationFactory<WebSite.Program>
     {
         private readonly string _environment = "Development";
+        private AmbientContext _currentAmbientContext;
+
 
         public WebSiteApplicationFactory()
         {
-
+            _currentAmbientContext = new AmbientContext() { IsLoggedIn = false, UserId = "100", GroupId = 2 };
         }
 
         protected override IHost CreateHost(IHostBuilder builder)
@@ -20,6 +23,7 @@ namespace OmahaDotDev.Manager.Tests
             // Add mock/test services to the builder here
             builder.ConfigureServices(services =>
             {
+                services.ReplaceOrAddService<AmbientContext>(provider => _currentAmbientContext);
                 //services.AddScoped(sp =>
                 //{
                 //    // Replace SQLite with in-memory database for tests

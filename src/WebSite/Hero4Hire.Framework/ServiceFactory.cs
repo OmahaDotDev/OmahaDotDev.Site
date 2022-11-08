@@ -15,7 +15,7 @@ namespace Hero4Hire.Framework
     }
     public class ServiceFactory<TContext>
     {
-        private readonly IContextResolver<TContext> _contextResolver;
+        private readonly TContext _context;
         private readonly IServiceProvider _serviceProvider;
         private readonly FactoryScope _factoryScope;
 
@@ -34,17 +34,17 @@ namespace Hero4Hire.Framework
             { FactoryScope.Accessor, new List<FactoryScope>() {FactoryScope.Utility}},
         };
 
-        public ServiceFactory(IServiceProvider serviceProvider, IContextResolver<TContext> contextResolver, FactoryScope factoryScope)
+        public ServiceFactory(IServiceProvider serviceProvider, TContext context, FactoryScope factoryScope)
         {
             _serviceProvider = serviceProvider;
-            _contextResolver = contextResolver;
+            _context = context;
             _factoryScope = factoryScope;
         }
 
-        public ServiceFactory(IServiceProvider serviceProvider, IContextResolver<TContext> contextResolver)
+        public ServiceFactory(IServiceProvider serviceProvider, TContext context)
         {
             _serviceProvider = serviceProvider;
-            _contextResolver = contextResolver;
+            _context = context;
             _factoryScope = FactoryScope.Client;
         }
 

@@ -16,11 +16,10 @@ namespace OmahaDotDev.Manager
         public static IServiceCollection AddManager(this IServiceCollection services, SiteConfiguration siteConfiguration)
         {
             services.AddTransient<IGroupManager, GroupManager>();
-            services.AddTransient<IContextResolver<AmbientContext>, ContextResolver>();
-            services.AddTransient<AmbientContext, AmbientContext>(sp =>
+
+            services.AddTransient<AmbientContext>(sp =>
             {
-                var x = sp.GetRequiredService<IContextResolver<AmbientContext>>();
-                return x.GetContext();
+                return new AmbientContext() { IsLoggedIn = false };
             });
 
 
