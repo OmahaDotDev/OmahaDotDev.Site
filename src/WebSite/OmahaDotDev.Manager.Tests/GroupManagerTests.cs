@@ -14,7 +14,7 @@ namespace OmahaDotDev.Manager.Tests
     {
         private readonly WebSiteApplicationFactory _webSiteApplicationFactory;
         private readonly IServiceScope _scope;
-        private readonly ApplicationDbContext _appDb;
+        private readonly IdentityDbContext _appDb;
         private readonly IntegrationTestFixture _integrationTestFixture;
         public void Dispose()
         {
@@ -32,7 +32,7 @@ namespace OmahaDotDev.Manager.Tests
         {
             _webSiteApplicationFactory = testFixture.WebSiteApplicationFactory;
             _scope = _webSiteApplicationFactory.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
-            _appDb = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            _appDb = _scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
             _integrationTestFixture = testFixture;
 
             //ensure db exists
@@ -54,6 +54,7 @@ namespace OmahaDotDev.Manager.Tests
         [Fact]
         public async Task gg()
         {
+            var userId = await _integrationTestFixture.CreateTestUser("test");
 
             using var client = _webSiteApplicationFactory.CreateClient();
 

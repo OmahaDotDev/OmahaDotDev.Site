@@ -30,14 +30,21 @@ namespace OmahaDotDev.Manager
 
         public async Task<ApiGroupResponse> CreateGroup(ApiCreateGroupRequest request, CancellationToken cancellationToken)
         {
-            var accessorRequest = new CreateGroupRequest(request.Name, request.DomainNames);
-            var accessorResult = await _groupAdminResourceAccess.CreateGroup(accessorRequest, cancellationToken);
-            var apiResult = new ApiGroupResponse(accessorResult.Name, accessorResult.DomainNames)
+            try
             {
-                Id = accessorResult.Id,
-            };
+                var accessorRequest = new CreateGroupRequest(request.Name, request.DomainNames);
+                var accessorResult = await _groupAdminResourceAccess.CreateGroup(accessorRequest, cancellationToken);
+                var apiResult = new ApiGroupResponse(accessorResult.Name, accessorResult.DomainNames)
+                {
+                    Id = accessorResult.Id,
+                };
 
-            return apiResult;
+                return apiResult;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public Task DeleteGroup(ApiDeleteGroupRequest request, CancellationToken cancellationToken)
