@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using OmahaDotDev.Manager;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.WebSite.Data;
-
 namespace OmahaDotDev.WebSite
 {
 
@@ -18,22 +17,13 @@ namespace OmahaDotDev.WebSite
             builder.Services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<IdentityDbContext>();
             builder.Services.AddRazorPages();
 
             builder.Services.AddManager(new SiteConfiguration(connectionString));
-
-            #region support for NSwag 
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddOpenApiDocument(doc =>
-            {
-                doc.Version = "v1";
-                doc.Title = "wut";
-            });
-            #endregion
-
 
             var app = builder.Build();
 
@@ -41,6 +31,9 @@ namespace OmahaDotDev.WebSite
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+                app.UseSwagger();
+                app.UseSwaggerUI();
+
             }
             else
             {
@@ -56,11 +49,6 @@ namespace OmahaDotDev.WebSite
 
             app.UseAuthorization();
 
-
-            #region NSwag support
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
-            #endregion
 
 
             app.MapManager();
