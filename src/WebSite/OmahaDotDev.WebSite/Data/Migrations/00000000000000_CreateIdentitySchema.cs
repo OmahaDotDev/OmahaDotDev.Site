@@ -191,6 +191,17 @@ namespace OmahaDotDev.WebSite.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.Sql(@"
+                                    CREATE TRIGGER createTrigger ON dbo.AspNetUsers
+                                    FOR INSERT
+                                    AS
+
+                                    INSERT INTO groups.Members
+                                        (UserId)
+                                    SELECT 
+                                    ID from inserted
+                                    ");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

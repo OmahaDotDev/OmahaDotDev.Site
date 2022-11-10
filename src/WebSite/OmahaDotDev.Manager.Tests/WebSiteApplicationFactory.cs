@@ -8,12 +8,13 @@ namespace OmahaDotDev.Manager.Tests
     public class WebSiteApplicationFactory : WebApplicationFactory<WebSite.Program>
     {
         private readonly string _environment = "Development";
-        private AmbientContext _currentAmbientContext;
 
+
+        public AmbientContext CurrentAmbientContext { get; set; }
 
         public WebSiteApplicationFactory()
         {
-            _currentAmbientContext = new AmbientContext() { IsLoggedIn = false, UserId = "100", GroupId = 2 };
+            CurrentAmbientContext = new AmbientContext() { IsLoggedIn = false, UserId = "100", GroupId = 2 };
         }
 
         protected override IHost CreateHost(IHostBuilder builder)
@@ -23,7 +24,7 @@ namespace OmahaDotDev.Manager.Tests
             // Add mock/test services to the builder here
             builder.ConfigureServices(services =>
             {
-                services.ReplaceOrAddService<AmbientContext>(provider => _currentAmbientContext);
+                services.ReplaceOrAddService<AmbientContext>(provider => CurrentAmbientContext);
                 //services.AddScoped(sp =>
                 //{
                 //    // Replace SQLite with in-memory database for tests

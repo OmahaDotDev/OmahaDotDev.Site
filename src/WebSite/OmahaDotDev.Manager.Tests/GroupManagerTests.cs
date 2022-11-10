@@ -56,7 +56,7 @@ namespace OmahaDotDev.Manager.Tests
         public async Task gg()
         {
             var userId = await _integrationTestFixture.CreateTestUser("test");
-
+            _webSiteApplicationFactory.CurrentAmbientContext = new Model.Common.AmbientContext() { UserId = userId, IsLoggedIn = true };
             using var client = _webSiteApplicationFactory.CreateClient();
 
             var body = new ApiCreateGroupRequest("trest", new List<string>() { "test" });

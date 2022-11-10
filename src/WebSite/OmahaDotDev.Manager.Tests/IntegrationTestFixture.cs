@@ -71,7 +71,7 @@ namespace OmahaDotDev.Manager.Tests
             var _userManager = _scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var newUser = new IdentityUser(userName);
             var result = await _userManager.CreateAsync(newUser);
-            _siteDb.Add(new MemberRecord(newUser.Id));
+
             return newUser.Id;
 
             //return "";
