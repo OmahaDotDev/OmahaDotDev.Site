@@ -23,6 +23,8 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>OmahaDotDev.Manager.Tests</_Parameter1>
     </AssemblyAttribute>
-
+	  <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+		  <_Parameter1>OmahaDotDev.WebSite.Tests</_Parameter1>
+	  </AssemblyAttribute>
   </ItemGroup>
 </Project>
