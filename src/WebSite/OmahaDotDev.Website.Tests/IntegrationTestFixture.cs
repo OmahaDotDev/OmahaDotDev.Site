@@ -4,13 +4,19 @@ using Microsoft.Extensions.DependencyInjection;
 using OmahaDotDev.Model.Common;
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Xunit;
 
 namespace OmahaDotDev.Website.Tests
 {
+    //https://github.com/raw-coding-youtube/testing-101/blob/main/RawCoding.WebApp/RawCoding.WebApp.IntegrationTests/AppInstance.cs
+    //https://www.youtube.com/watch?v=b1-KG_x-Y5Q
+
     public class IntegrationTestFixture : IDisposable, IAsyncLifetime
     {
         public AmbientContext CurrentAmbientContext { get; set; } = new AmbientContext() { IsLoggedIn = false };
@@ -20,9 +26,22 @@ namespace OmahaDotDev.Website.Tests
         public IntegrationTestFixture()
         {
             AppFactory = new WebApplicationFactory<WebSite.Program>()
-                                .WithReplacedService(provider => CurrentAmbientContext);
+                .WithWebHostBuilder(
+                    builder => builder.ConfigureServices(
+                        services => services
+                            .ReplaceOrAddService<AmbientContext>(provider => CurrentAmbientContext)
+                            .ReplaceOrAddService<MockClaimSeed>(provider => new MockClaimSeed(new List<Claim>()))
+                    ));
+                    // .
+                    //          //   .WithAlternativeService(provider => CurrentAmbientContext)
+                    //             .WithAlternativeService(provider => new MockClaimSeed(new List<Claim>()))
+                ;
 
             ScopeFactory = AppFactory.Services.GetRequiredService<IServiceScopeFactory>();
+
+            using var x = ScopeFactory.CreateScope();
+            var y = x.ServiceProvider.GetService<AmbientContext>();
+            var z = x.ServiceProvider.GetService<MockClaimSeed>();
         }
 
         //Create a user

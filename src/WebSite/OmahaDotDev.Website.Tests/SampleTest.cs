@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Xunit;
 
 namespace OmahaDotDev.Website.Tests;
 
@@ -11,10 +12,15 @@ public class SampleTest : IClassFixture<IntegrationTestFixture>
         _integrationTestFixture = integrationTestFixture;
     }
     [Fact]
-    public void Test1()
+    public async Task  Test1()
     {
         using var arrange = new Arrange(_integrationTestFixture.ScopeFactory);
 
+        var client = _integrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
+        {
+            AllowAutoRedirect = false
+        });
+        var result = await client.GetAsync("/helloworld" );
 
     }
 }

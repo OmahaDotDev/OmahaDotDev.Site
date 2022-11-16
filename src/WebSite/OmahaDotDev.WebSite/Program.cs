@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OmahaDotDev.Manager;
 using OmahaDotDev.Model.Common;
+using OmahaDotDev.WebSite.Auth;
 using OmahaDotDev.WebSite.Data;
 namespace OmahaDotDev.WebSite
 {
@@ -24,6 +26,13 @@ namespace OmahaDotDev.WebSite
             builder.Services.AddRazorPages();
 
             builder.Services.AddManager(new SiteConfiguration(connectionString));
+            
+            builder.Services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Custom", policy => 
+                    policy.Requirements.Add(new CustomAuthorizationRequirement()));
+            });
 
             var app = builder.Build();
 
@@ -54,7 +63,8 @@ namespace OmahaDotDev.WebSite
             app.MapManager();
             app.MapRazorPages();
 
-
+            app.MapGet("/helloworld", () => "Hello World!")
+                .RequireAuthorization("Custom");
 
             app.Run();
         }
