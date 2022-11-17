@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,17 @@ namespace OmahaDotDev.WebSite
             builder.Services.AddRazorPages();
 
             builder.Services.AddManager(new SiteConfiguration(connectionString));
+            
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddTransient<AmbientContext>(provider =>
+            {
+                var httpContext = provider.GetRequiredService<IHttpContextAccessor>().HttpContext;
+                return new AmbientContext()
+                {
+                    UserId = httpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    IsLoggedIn = httpContext?.User.Identity?.IsAuthenticated == true,
+                };
+            });
             
             builder.Services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>();
             builder.Services.AddAuthorization(options =>
@@ -63,7 +75,10 @@ namespace OmahaDotDev.WebSite
             app.MapManager();
             app.MapRazorPages();
 
-            app.MapGet("/helloworld", () => "Hello World!")
+            app.MapGet("/helloworld", (AmbientContext context) =>
+                {
+                    return "Hello World!";
+                })
                 .RequireAuthorization("Custom");
 
             app.Run();
