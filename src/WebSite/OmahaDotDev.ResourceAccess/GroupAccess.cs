@@ -11,8 +11,8 @@ namespace OmahaDotDev.ResourceAccess
     internal class GroupAccess : AccessorBase<AmbientContext>, IGroupAdminResourceAccess
     {
         private readonly SiteDbContext _dbContext;
-        public GroupAccess(AmbientContext ambientContext, ServiceFactory<AmbientContext> serviceFactory, SiteDbContext dbContext)
-            : base(ambientContext, serviceFactory)
+        public GroupAccess(SiteDbContext dbContext)
+
         {
             _dbContext = dbContext;
         }
@@ -36,7 +36,7 @@ namespace OmahaDotDev.ResourceAccess
                 .Where(p => p.DomainNames.Any(dn => dn.DomainName == domainName))
                 .Include(p => p.DomainNames)
                 .AsNoTracking()
-                .FirstAsync();
+                .FirstAsync(cancellationToken);
 
             return ToGroupResponse(result);
         }

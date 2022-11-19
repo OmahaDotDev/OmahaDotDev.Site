@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OmahaDotDev.Model.Common;
+using OmahaDotDev.ResourceAccess.Database;
+using Respawn;
+using Respawn.Graph;
 using System;
 using System.Collections.Generic;
 using System.Formats.Asn1;
@@ -9,7 +14,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Xunit;
 
 namespace OmahaDotDev.Website.Tests
@@ -20,21 +24,25 @@ namespace OmahaDotDev.Website.Tests
     public class IntegrationTestFixture : IDisposable, IAsyncLifetime
     {
         public AmbientContext CurrentAmbientContext { get; set; } = new AmbientContext() { IsLoggedIn = false };
-        //public List<Claim> CurrentClaims { get  {
-        //        if (CurrentAmbientContext.IsLoggedIn)
-        //        {
-        //            return new List<Claim>() { new Claim(ClaimTypes.NameIdentifier,
-        //                CurrentAmbientContext.UserId)};
-        //        }
-        //        else
-        //        {
-        //            return new List<Claim>(); 
-        //        }
+        public List<Claim> CurrentClaims
+        {
+            get
+            {
+                if (CurrentAmbientContext.IsLoggedIn && CurrentAmbientContext.UserId != null)
+                {
+                    return new List<Claim>() { new Claim(ClaimTypes.NameIdentifier,
+                        CurrentAmbientContext.UserId)};
+                }
+                else
+                {
+                    return new List<Claim>();
+                }
 
-        //    } }
+            }
+        }
 
-        public List<Claim> CurrentClaims { get; set; } = new List<Claim>()  { new Claim(ClaimTypes.NameIdentifier,
-                        "wut wut")};
+        private Respawner _respawner;
+
         public WebApplicationFactory<WebSite.Program> AppFactory { get; set; }
         public IServiceScopeFactory ScopeFactory { get; set; }
 
@@ -43,38 +51,41 @@ namespace OmahaDotDev.Website.Tests
             AppFactory = new WebApplicationFactory<WebSite.Program>()
                 .WithWebHostBuilder(
                     builder => builder.ConfigureServices(
-                        services => {
+                        services =>
+                        {
                             services.AddSingleton<IAuthenticationSchemeProvider, MockSchemeProvider>();
                             services.ReplaceOrAddService<MockClaims>(provider => new MockClaims(CurrentClaims));
-                               // .ReplaceOrAddService<AmbientContext>(provider => CurrentAmbientContext)
-                                
-                                
-                            }
+                            // .ReplaceOrAddService<AmbientContext>(provider => CurrentAmbientContext)
+
+
+                        }
                     ));
 
             ScopeFactory = AppFactory.Services.GetRequiredService<IServiceScopeFactory>();
 
-            using var x = ScopeFactory.CreateScope();
-            var y = x.ServiceProvider.GetService<AmbientContext>();
-            var z = x.ServiceProvider.GetService<MockClaims>();
+            //using var x = ScopeFactory.CreateScope();
+            //var y = x.ServiceProvider.GetService<AmbientContext>();
+            //var z = x.ServiceProvider.GetService<MockClaims>();
+
+
         }
 
         //Create a user
         public void RunAsUser(string userId)
         {
-            
 
             CurrentAmbientContext = new AmbientContext() { IsLoggedIn = true, UserId = userId };
-            if (CurrentAmbientContext.IsLoggedIn)
-            {
-                CurrentClaims =  new List<Claim>() { new Claim(ClaimTypes.NameIdentifier,
-                        CurrentAmbientContext.UserId)};
-            }
-            else
-            {
-                CurrentClaims = new List<Claim>();
-            }
 
+        }
+
+        public async Task ResetSystemState()
+        {
+            CurrentAmbientContext = new AmbientContext() { UserId = null, IsLoggedIn = false };
+
+            using var scope = ScopeFactory.CreateScope();
+            await using var db = scope.ServiceProvider.GetRequiredService<SiteDbContext>();
+
+            await _respawner.ResetAsync(db.Database.GetConnectionString());
         }
 
 
@@ -90,10 +101,19 @@ namespace OmahaDotDev.Website.Tests
             return Task.CompletedTask;
         }
 
-        public Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            //throw new NotImplementedException();
-            return Task.CompletedTask;
+            using var scope = ScopeFactory.CreateScope();
+            await using var db = scope.ServiceProvider.GetRequiredService<SiteDbContext>();
+
+            _respawner = await Respawner.CreateAsync(db.Database.GetConnectionString(), new RespawnerOptions
+            {
+                TablesToIgnore = new Table[]
+                {
+                    "__EFMigrationsHistory"
+                },
+
+            });
         }
         #endregion
     }

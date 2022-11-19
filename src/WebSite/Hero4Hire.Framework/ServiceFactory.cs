@@ -57,7 +57,7 @@ namespace Hero4Hire.Framework
                 AccessorBase<TContext> @base => allowedServices.Contains(FactoryScope.Accessor),
                 UtilityBase<TContext> @base => allowedServices.Contains(FactoryScope.Utility),
                 EngineBase<TContext> @base => allowedServices.Contains(FactoryScope.Engine),
-                _ => false
+                _ => true
             };
         }
 
@@ -65,33 +65,33 @@ namespace Hero4Hire.Framework
         {
             T result = _serviceProvider.GetRequiredService<T>();
 
-            //if (!IsCallAllowedByIDesignRules(result))
-            //{
-            //    throw new InvalidOperationException($"{typeof(T).Name} does not implement ManagerBase");
-            //}
+            if (!IsCallAllowedByIDesignRules(result))
+            {
+                throw new InvalidOperationException($"{typeof(T).Name} does not implement ManagerBase");
+            }
 
-            //switch (result)
-            //{
-            //    case ManagerBase<TContext> @base:
-            //        @base.AmbientContext = _contextResolver.GetContext();
-            //        @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Manager);
-            //        break;
-            //    case AccessorBase<TContext> @base:
-            //        @base.AmbientContext = _contextResolver.GetContext();
-            //        @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Accessor);
-            //        break;
-            //    case EngineBase<TContext> @base:
-            //        @base.AmbientContext = _contextResolver.GetContext();
-            //        @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Engine);
-            //        break;
-            //    case UtilityBase<TContext> @base:
-            //        @base.AmbientContext = _contextResolver.GetContext();
-            //        @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Utility);
-            //        break;
-            //    default:
-            //        // mocking of the manager factory is not supported so every result should implement ManagerBase
-            //        throw new InvalidOperationException($"{typeof(T).Name} does not implement ManagerBase");
-            //}
+            switch (result)
+            {
+                case ManagerBase<TContext> @base:
+                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Manager);
+                    break;
+                case AccessorBase<TContext> @base:
+                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Accessor);
+                    break;
+                case EngineBase<TContext> @base:
+                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Engine);
+                    break;
+                case UtilityBase<TContext> @base:
+                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Utility);
+                    break;
+                default:
+                    // mocking of the manager factory is not supported so every result should implement ManagerBase
+                    throw new InvalidOperationException($"{typeof(T).Name} does not implement ManagerBase");
+            }
 
             return result;
 

@@ -1,29 +1,63 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
+using OmahaDotDev.Manager.PublicContract;
+using System.Net;
+using System.Net.Http.Json;
 using Xunit;
 
 namespace OmahaDotDev.Website.Tests;
 
-public class SampleTest : IClassFixture<IntegrationTestFixture>
+public class SampleTest : IntegrationTestBase
 {
-    private readonly IntegrationTestFixture _integrationTestFixture;
-
-    public SampleTest(IntegrationTestFixture integrationTestFixture)
+    public SampleTest(IntegrationTestFixture integrationTestFixture) : base(integrationTestFixture)
     {
-        _integrationTestFixture = integrationTestFixture;
     }
+
     [Fact]
-    public async Task  Test1()
+    public async Task Test1()
     {
-        using var arrange = new Arrange(_integrationTestFixture.ScopeFactory);
+        using var arrange = new Arrange(IntegrationTestFixture.ScopeFactory);
         var user = await arrange.CreateTestSiteAdminAsync();
-        
-        var client = _integrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
+
+        var client = IntegrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
         {
             AllowAutoRedirect = false
         });
-        _integrationTestFixture.RunAsUser(user);
+        IntegrationTestFixture.RunAsUser(user);
 
-        var result = await client.GetAsync("/helloworld" );
+        var result = await client.GetAsync("/helloworld");
 
+        result.IsSuccessStatusCode.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Test2()
+    {
+        var client = IntegrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
+        {
+            AllowAutoRedirect = false
+        });
+
+        var result = await client.GetAsync("/helloworld");
+
+        result.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+    [Fact]
+    public async Task Test3()
+    {
+        using var arrange = new Arrange(IntegrationTestFixture.ScopeFactory);
+        var user = await arrange.CreateTestSiteAdminAsync();
+
+
+        var client = IntegrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
+        {
+            AllowAutoRedirect = false
+        });
+        IntegrationTestFixture.RunAsUser(user);
+
+        var requestBody = new ApiCreateGroupRequest("Test Group", new List<string>() { "one" });
+        var result = await client.PostAsJsonAsync("/groups", requestBody);
+
+        result.IsSuccessStatusCode.Should().BeTrue();
     }
 }

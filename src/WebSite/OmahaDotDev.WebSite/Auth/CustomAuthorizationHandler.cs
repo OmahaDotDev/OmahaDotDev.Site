@@ -1,20 +1,20 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace OmahaDotDev.WebSite.Auth;
 
-public class CustomAuthorizationRequirement: IAuthorizationRequirement
+public class CustomAuthorizationRequirement : IAuthorizationRequirement
 {
-    
+
 }
-public class CustomAuthorizationHandler: AuthorizationHandler<CustomAuthorizationRequirement>
+public class CustomAuthorizationHandler : AuthorizationHandler<CustomAuthorizationRequirement>
 {
-    protected override Task 
+    protected override Task
         HandleRequirementAsync(AuthorizationHandlerContext context, CustomAuthorizationRequirement requirement)
     {
 
         if (
-            context.User.Identity is { IsAuthenticated: true, Name: "beolson@gmail.com" } &&
+            context.User.Identity is { IsAuthenticated: true } &&
             context.User.FindFirstValue(ClaimTypes.NameIdentifier)?.Length > 10
         )
         {
