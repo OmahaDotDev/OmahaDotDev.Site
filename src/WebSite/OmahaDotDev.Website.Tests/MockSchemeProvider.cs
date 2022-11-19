@@ -34,10 +34,10 @@ public class MockSchemeProvider : AuthenticationSchemeProvider
 
     public class MockAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        private readonly MockClaimSeed _claimSeed;
+        private readonly MockClaims _claimSeed;
 
         public MockAuthenticationHandler(
-            MockClaimSeed claimSeed,
+            MockClaims claimSeed,
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
@@ -57,11 +57,11 @@ public class MockSchemeProvider : AuthenticationSchemeProvider
         }
     }
 
-    public class MockClaimSeed
-    {
+    public class MockClaims
+{
         private readonly IEnumerable<Claim> _seed;
 
-        public MockClaimSeed(IEnumerable<Claim> seed)
+        public MockClaims(IEnumerable<Claim> seed)
         {
             _seed = seed;
         }

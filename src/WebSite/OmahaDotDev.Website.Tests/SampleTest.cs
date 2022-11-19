@@ -15,11 +15,14 @@ public class SampleTest : IClassFixture<IntegrationTestFixture>
     public async Task  Test1()
     {
         using var arrange = new Arrange(_integrationTestFixture.ScopeFactory);
-
+        var user = await arrange.CreateTestSiteAdminAsync();
+        
         var client = _integrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
         {
             AllowAutoRedirect = false
         });
+        _integrationTestFixture.RunAsUser(user);
+
         var result = await client.GetAsync("/helloworld" );
 
     }

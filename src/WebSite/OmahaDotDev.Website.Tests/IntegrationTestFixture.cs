@@ -20,6 +20,21 @@ namespace OmahaDotDev.Website.Tests
     public class IntegrationTestFixture : IDisposable, IAsyncLifetime
     {
         public AmbientContext CurrentAmbientContext { get; set; } = new AmbientContext() { IsLoggedIn = false };
+        //public List<Claim> CurrentClaims { get  {
+        //        if (CurrentAmbientContext.IsLoggedIn)
+        //        {
+        //            return new List<Claim>() { new Claim(ClaimTypes.NameIdentifier,
+        //                CurrentAmbientContext.UserId)};
+        //        }
+        //        else
+        //        {
+        //            return new List<Claim>(); 
+        //        }
+
+        //    } }
+
+        public List<Claim> CurrentClaims { get; set; } = new List<Claim>()  { new Claim(ClaimTypes.NameIdentifier,
+                        "wut wut")};
         public WebApplicationFactory<WebSite.Program> AppFactory { get; set; }
         public IServiceScopeFactory ScopeFactory { get; set; }
 
@@ -28,49 +43,40 @@ namespace OmahaDotDev.Website.Tests
             AppFactory = new WebApplicationFactory<WebSite.Program>()
                 .WithWebHostBuilder(
                     builder => builder.ConfigureServices(
-                        services => services
-                            .ReplaceOrAddService<AmbientContext>(provider => CurrentAmbientContext)
-                            .ReplaceOrAddService<MockClaimSeed>(provider => new MockClaimSeed(new List<Claim>()))
+                        services => {
+                            services.AddSingleton<IAuthenticationSchemeProvider, MockSchemeProvider>();
+                            services.ReplaceOrAddService<MockClaims>(provider => new MockClaims(CurrentClaims));
+                               // .ReplaceOrAddService<AmbientContext>(provider => CurrentAmbientContext)
+                                
+                                
+                            }
                     ));
-                    // .
-                    //          //   .WithAlternativeService(provider => CurrentAmbientContext)
-                    //             .WithAlternativeService(provider => new MockClaimSeed(new List<Claim>()))
-                ;
 
             ScopeFactory = AppFactory.Services.GetRequiredService<IServiceScopeFactory>();
 
             using var x = ScopeFactory.CreateScope();
             var y = x.ServiceProvider.GetService<AmbientContext>();
-            var z = x.ServiceProvider.GetService<MockClaimSeed>();
+            var z = x.ServiceProvider.GetService<MockClaims>();
         }
 
         //Create a user
-        public async Task<string> RunAsUserAsync()
+        public void RunAsUser(string userId)
         {
-            using var scope = ScopeFactory.CreateScope();
-            using var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            
 
-
-            var newUser = new IdentityUser("Regular User");
-            var result = await userManager.CreateAsync(newUser);
-
-            CurrentAmbientContext = new AmbientContext() { IsLoggedIn = true, UserId = newUser.Id };
-            return newUser.Id;
+            CurrentAmbientContext = new AmbientContext() { IsLoggedIn = true, UserId = userId };
+            if (CurrentAmbientContext.IsLoggedIn)
+            {
+                CurrentClaims =  new List<Claim>() { new Claim(ClaimTypes.NameIdentifier,
+                        CurrentAmbientContext.UserId)};
+            }
+            else
+            {
+                CurrentClaims = new List<Claim>();
+            }
 
         }
 
-        public async Task<string> RunAsSiteAdminAsync()
-        {
-            using var scope = ScopeFactory.CreateScope();
-            using var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-
-
-            var newUser = new IdentityUser("Site Admin");
-            var result = await userManager.CreateAsync(newUser);
-
-            CurrentAmbientContext = new AmbientContext() { IsLoggedIn = true, UserId = newUser.Id };
-            return newUser.Id;
-        }
 
         #region Lifetime
         public void Dispose()

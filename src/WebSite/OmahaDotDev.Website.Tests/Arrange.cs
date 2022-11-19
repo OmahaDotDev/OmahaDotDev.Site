@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using OmahaDotDev.Model.Common;
 using OmahaDotDev.ResourceAccess.Database;
 using OmahaDotDev.WebSite.Data;
 using System.Runtime.CompilerServices;
@@ -28,9 +30,14 @@ public class Arrange : IDisposable
         return Task.CompletedTask;
     }
 
-    public Task CreateTestSiteAdminAsync()
+    public async Task<string> CreateTestSiteAdminAsync()
     {
-        return Task.CompletedTask;
+        using var userManager = _scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+        var newUser = new IdentityUser("Site Admin");
+        var result = await userManager.CreateAsync(newUser);
+        
+        return newUser.Id;
     }
 
     public Task CreateTestGroupAdminAsync()
