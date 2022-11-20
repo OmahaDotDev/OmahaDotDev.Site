@@ -24,14 +24,9 @@ public class GroupApiTests : IntegrationTestBase
         var user = await arrange.CreateTestSiteAdminAsync();
 
         //act
-        using var client = IntegrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
-        {
-            AllowAutoRedirect = false
-        });
-        IntegrationTestFixture.RunAsUser(user);
-
+        using var act = new Act(IntegrationTestFixture, user);
         var requestBody = new ApiCreateGroupRequest("Test Group", new List<string>() { "one" });
-        var result = await client.PostAsJsonAsync("/groups", requestBody);
+        var result = await act.AppClient.PostAsJsonAsync("/groups", requestBody);
         var resultBody = await result.Content.ReadFromJsonAsync<ApiGroupResponse>();
 
         //assert
