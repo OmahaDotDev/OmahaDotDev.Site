@@ -1,7 +1,7 @@
 ﻿using Hero4Hire.Framework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using OmahaDotDev.Manager.PublicContract;
+using OmahaDotDev.Manager.PublicContract.Group;
 using OmahaDotDev.Model.Accessors.Group;
 using OmahaDotDev.Model.Common;
 
@@ -30,22 +30,17 @@ namespace OmahaDotDev.Manager
 
         public async Task<ApiGroupResponse> CreateGroup(ApiCreateGroupRequest request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var accessorRequest = new CreateGroupRequest(request.Name, request.DomainNames);
-                var groupAdminResourceAccess = ServiceFactory.CreateService<IGroupAdminResourceAccess>();
-                var accessorResult = await groupAdminResourceAccess.CreateGroup(accessorRequest, cancellationToken);
-                var apiResult = new ApiGroupResponse(accessorResult.Name, accessorResult.DomainNames)
-                {
-                    Id = accessorResult.Id,
-                };
 
-                return apiResult;
-            }
-            catch (Exception ex)
+            var accessorRequest = new CreateGroupRequest(request.Name, request.DomainNames);
+            var groupAdminResourceAccess = ServiceFactory.CreateService<IGroupAdminResourceAccess>();
+            var accessorResult = await groupAdminResourceAccess.CreateGroup(accessorRequest, cancellationToken);
+            var apiResult = new ApiGroupResponse(accessorResult.Name, accessorResult.DomainNames)
             {
-                throw;
-            }
+                Id = accessorResult.Id,
+            };
+
+            return apiResult;
+
         }
 
         public Task DeleteGroup(ApiDeleteGroupRequest request, CancellationToken cancellationToken)

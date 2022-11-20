@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hero4Hire.TimeUtility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.ResourceAccess.Database.Model;
@@ -9,10 +10,12 @@ namespace OmahaDotDev.ResourceAccess.Database
     internal class SiteDbContext : DbContext
     {
         private readonly AmbientContext _ambientContext;
-        //private readonly ITimeUtility _timeUtility;
-        public SiteDbContext(DbContextOptions<SiteDbContext> options, AmbientContext ambientContext/*, ITimeUtility timeUtility*/)
+        private readonly ITimeUtility _timeUtility;
+        public SiteDbContext(DbContextOptions<SiteDbContext> options, AmbientContext ambientContext, ITimeUtility timeUtility)
             : base(options)
         {
+            _timeUtility = timeUtility;
+
             _ambientContext = ambientContext;
         }
 
@@ -51,11 +54,11 @@ namespace OmahaDotDev.ResourceAccess.Database
                     if (entry.State == EntityState.Added)
                     {
                         entity.CreatedByUserId = currentUserId;
-                        entity.CreatedDate = DateTime.UtcNow;
+                        entity.CreatedDate = _timeUtility.GetCurrentSystemTime();
                     }
 
                     entity.UpdatedByUserId = currentUserId;
-                    entity.UpdatedDate = DateTime.UtcNow;
+                    entity.UpdatedDate = _timeUtility.GetCurrentSystemTime();
                 }
             }
 

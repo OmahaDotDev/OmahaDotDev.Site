@@ -30,8 +30,4 @@
 		<ProjectReference Include="..\OmahaDotDev.WebSite\OmahaDotDev.WebSite.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="TestData\" />
-	</ItemGroup>
-
 </Project>

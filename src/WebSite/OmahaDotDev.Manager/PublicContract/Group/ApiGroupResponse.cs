@@ -1,4 +1,4 @@
-﻿namespace OmahaDotDev.Manager.PublicContract
+﻿namespace OmahaDotDev.Manager.PublicContract.Group
 {
     public record ApiGroupResponse(string Name, IEnumerable<string> DomainNames)
     {

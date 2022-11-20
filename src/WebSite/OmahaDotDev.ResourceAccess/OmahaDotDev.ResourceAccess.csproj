@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hero4Hire.Framework\Hero4Hire.Framework.csproj" />
+    <ProjectReference Include="..\Hero4Hire.TimeUtility\Hero4Hire.TimeUtility.csproj" />
 
     <ProjectReference Include="..\OmahaDotDev.Model\OmahaDotDev.Model.csproj" />
   </ItemGroup>

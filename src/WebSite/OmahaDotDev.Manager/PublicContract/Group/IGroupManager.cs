@@ -1,6 +1,6 @@
 ﻿using OmahaDotDev.Model.Common;
 
-namespace OmahaDotDev.Manager.PublicContract
+namespace OmahaDotDev.Manager.PublicContract.Group
 {
     public interface IGroupManager
     {

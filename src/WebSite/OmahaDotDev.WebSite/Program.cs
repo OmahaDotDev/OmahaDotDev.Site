@@ -1,4 +1,4 @@
-using System.Security.Claims;
+using Hero4Hire.TimeUtility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +6,8 @@ using OmahaDotDev.Manager;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.WebSite.Auth;
 using OmahaDotDev.WebSite.Data;
+using System.Security.Claims;
+
 namespace OmahaDotDev.WebSite
 {
 
@@ -20,14 +22,14 @@ namespace OmahaDotDev.WebSite
             builder.Services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddEndpointsApiExplorer();
+            //builder.Services.AddSwaggerGen();
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<IdentityDbContext>();
             builder.Services.AddRazorPages();
 
             builder.Services.AddManager(new SiteConfiguration(connectionString));
-            
+
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<AmbientContext>(provider =>
             {
@@ -38,22 +40,22 @@ namespace OmahaDotDev.WebSite
                     IsLoggedIn = httpContext?.User.Identity?.IsAuthenticated == true,
                 };
             });
-            
+
             builder.Services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>();
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("Custom", policy => 
+                options.AddPolicy("Custom", policy =>
                     policy.Requirements.Add(new CustomAuthorizationRequirement()));
             });
-
+            builder.Services.AddTimeUtility();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                //app.UseSwagger();
+                //app.UseSwaggerUI();
 
             }
             else

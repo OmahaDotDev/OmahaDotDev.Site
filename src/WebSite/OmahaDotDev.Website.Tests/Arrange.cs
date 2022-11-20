@@ -35,7 +35,7 @@ public class Arrange : IDisposable
         using var userManager = _scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
         var newUser = new IdentityUser("SiteAdmin");
-        var result = await userManager.CreateAsync(newUser);
+        await userManager.CreateAsync(newUser);
 
         return newUser.Id;
     }

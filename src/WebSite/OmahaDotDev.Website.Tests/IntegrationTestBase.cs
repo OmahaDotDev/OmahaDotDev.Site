@@ -20,7 +20,6 @@ public class IntegrationTestBase : IClassFixture<IntegrationTestFixture>, IAsync
     public Task DisposeAsync()
     {
         return Task.CompletedTask;
-        //throw new NotImplementedException();
     }
     #endregion
 }

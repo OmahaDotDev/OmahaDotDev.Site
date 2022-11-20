@@ -3,7 +3,7 @@ using Hero4Hire.TimeUtility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using OmahaDotDev.Manager.PublicContract;
+using OmahaDotDev.Manager.PublicContract.Group;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.ResourceAccess;
 
