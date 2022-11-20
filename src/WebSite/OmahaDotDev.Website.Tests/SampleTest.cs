@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using OmahaDotDev.Manager.PublicContract;
+using OmahaDotDev.ResourceAccess.Database;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
@@ -45,11 +47,12 @@ public class SampleTest : IntegrationTestBase
     [Fact]
     public async Task Test3()
     {
+        //arrange
         using var arrange = new Arrange(IntegrationTestFixture.ScopeFactory);
         var user = await arrange.CreateTestSiteAdminAsync();
 
-
-        var client = IntegrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
+        //act
+        using var client = IntegrationTestFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
         {
             AllowAutoRedirect = false
         });
@@ -57,7 +60,13 @@ public class SampleTest : IntegrationTestBase
 
         var requestBody = new ApiCreateGroupRequest("Test Group", new List<string>() { "one" });
         var result = await client.PostAsJsonAsync("/groups", requestBody);
+        var resultBody = await result.Content.ReadFromJsonAsync<ApiGroupResponse>();
 
+        //assert
         result.IsSuccessStatusCode.Should().BeTrue();
+        var scope = IntegrationTestFixture.ScopeFactory.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<SiteDbContext>();
+        db.Groups.FirstOrDefault(g => g.Id == resultBody!.Id)!.Name.Should().Be("Test Group");
+
     }
 }

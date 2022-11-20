@@ -16,7 +16,7 @@ namespace OmahaDotDev.Manager
                     CancellationToken token) =>
                 {
                     var manager = serviceFactory.CreateService<IGroupManager>();
-                    await manager.CreateGroup(request, token);
+                    return await manager.CreateGroup(request, token);
                 });
 
 
