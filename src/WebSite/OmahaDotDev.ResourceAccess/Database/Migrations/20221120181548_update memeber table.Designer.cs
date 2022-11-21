@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OmahaDotDev.ResourceAccess.Database;
 
@@ -11,9 +12,11 @@ using OmahaDotDev.ResourceAccess.Database;
 namespace OmahaDotDev.ResourceAccess.Database.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    partial class SiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221120181548_update memeber table")]
+    partial class updatememebertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

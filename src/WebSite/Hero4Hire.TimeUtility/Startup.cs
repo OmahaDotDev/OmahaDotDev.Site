@@ -7,7 +7,7 @@ namespace Hero4Hire.TimeUtility
     {
         public static IServiceCollection AddTimeUtility(this IServiceCollection services)
         {
-            services.AddScoped<ITimeUtility>(provider => provider.GetRequiredService<TimeUtility>());
+            services.AddSingleton<ITimeUtility, TimeUtility>();
             return services;
         }
     }

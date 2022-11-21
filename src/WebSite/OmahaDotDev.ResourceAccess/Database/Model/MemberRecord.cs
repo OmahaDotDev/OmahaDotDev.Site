@@ -8,6 +8,7 @@
         }
 
         public string UserId { get; set; }
+        public bool IsSiteAdmin { get; set; }
         public IEnumerable<GroupRecord> CreatedGroups { get; set; } = new List<GroupRecord>();
 
         public IEnumerable<GroupRecord> UpdatedGroups { get; set; } = new List<GroupRecord>();

@@ -73,19 +73,19 @@ namespace Hero4Hire.Framework
             switch (result)
             {
                 case ManagerBase<TContext> @base:
-                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.AmbientContext = _context;
                     @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Manager);
                     break;
                 case AccessorBase<TContext> @base:
-                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.AmbientContext = _context;
                     @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Accessor);
                     break;
                 case EngineBase<TContext> @base:
-                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.AmbientContext = _context;
                     @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Engine);
                     break;
                 case UtilityBase<TContext> @base:
-                    //@base.AmbientContext = _contextResolver.GetContext();
+                    @base.AmbientContext = _context;
                     @base.ServiceFactory = ActivatorUtilities.CreateInstance<ServiceFactory<TContext>>(_serviceProvider, FactoryScope.Utility);
                     break;
                 default:

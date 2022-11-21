@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OmahaDotDev.Model.Common;
 using OmahaDotDev.ResourceAccess.Database;
 using OmahaDotDev.Website.Tests.Mocks;
+using OmahaDotDev.WebSite.Data;
 using Respawn;
 using Respawn.Graph;
 using System.Security.Claims;
@@ -87,6 +88,11 @@ namespace OmahaDotDev.Website.Tests
         {
             using var scope = ScopeFactory.CreateScope();
             await using var db = scope.ServiceProvider.GetRequiredService<SiteDbContext>();
+            await using var identityDb = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+
+            await identityDb.Database.EnsureDeletedAsync();
+            await identityDb.Database.MigrateAsync();
+            await db.Database.MigrateAsync();
 
             _respawner = await Respawner.CreateAsync(db.Database.GetConnectionString()!, new RespawnerOptions
             {

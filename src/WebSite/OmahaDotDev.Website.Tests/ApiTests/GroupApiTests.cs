@@ -30,16 +30,32 @@ public class GroupApiTests : IntegrationTestBase
         var resultBody = await result.Content.ReadFromJsonAsync<ApiGroupResponse>();
 
         //assert
+        using var assert = new Assert(IntegrationTestFixture.ScopeFactory);
         result.IsSuccessStatusCode.Should().BeTrue();
-        using var scope = IntegrationTestFixture.ScopeFactory.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<SiteDbContext>();
-        db.Groups.FirstOrDefault(g => g.Id == resultBody!.Id).Should().BeEquivalentTo(new GroupRecord("Test Group")
+        var expected = new GroupRecord("Test Group")
         {
             CreatedByUserId = user,
             UpdatedByUserId = user,
             CreatedDate = IntegrationTestFixture.TimeUtility.GetCurrentSystemTime(),
             UpdatedDate = IntegrationTestFixture.TimeUtility.GetCurrentSystemTime(),
             Id = resultBody!.Id
-        });
+        };
+
+        assert.SiteDb.Groups.FirstOrDefault(g => g.Id == resultBody!.Id).Should().BeEquivalentTo(expected);
+    }
+
+    [Fact]
+    public async Task CreateGroup_ShouldFail_WhenNotLoggedIn()
+    {
+        //act
+        using var act = new Act(IntegrationTestFixture);
+        var requestBody = new ApiCreateGroupRequest("Test Group", new List<string>() { "one" });
+        var result = await act.AppClient.PostAsJsonAsync("/groups", requestBody);
+
+
+        //assert
+        using var assert = new Assert(IntegrationTestFixture.ScopeFactory);
+        result.Should().HaveStatusCode(HttpStatusCode.Forbidden);
+
     }
 }

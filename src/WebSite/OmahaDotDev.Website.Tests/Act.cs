@@ -15,6 +15,15 @@ public class Act : IDisposable
         });
     }
 
+    public Act(IntegrationTestFixture testFixture)
+    {
+
+        AppClient = testFixture.AppFactory.CreateClient(new WebApplicationFactoryClientOptions()
+        {
+            AllowAutoRedirect = false
+        });
+    }
+
     public void Dispose()
     {
         AppClient.Dispose();

@@ -19,6 +19,12 @@ namespace OmahaDotDev.ResourceAccess
 
         public async Task<GroupResponse> CreateGroup(CreateGroupRequest request, CancellationToken cancellationToken)
         {
+            var userIsSiteAdmin = await _dbContext.IsUserSiteAdmin(AmbientContext);
+            if (!userIsSiteAdmin)
+            {
+                throw new ForbiddenException(AmbientContext, "Create Group");
+            }
+
             var dbRecord = new GroupRecord(request.Name)
             {
                 DomainNames = request.DomainNames.Select(dn => new GroupDomainNameRecord(dn)).ToList()
