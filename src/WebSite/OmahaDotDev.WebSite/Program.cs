@@ -17,7 +17,7 @@ using System.Security.Claims;
 
 //https://code-maze.com/global-error-handling-aspnetcore/
 //https://stackoverflow.com/questions/65729903/trigger-exception-handler-with-status-code-from-middleware
-
+// https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-7.0
 namespace OmahaDotDev.WebSite
 {
 
