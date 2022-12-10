@@ -6,27 +6,25 @@ using System.Net;
 
 namespace OmahaDotDev.WebSite.ErrorHandling
 {
-    public class ForbiddenExceptionFilter : IExceptionFilter
+    public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
     {
-        private readonly IHostEnvironment _hostEnvironment;
+        public int Order => int.MaxValue - 10;
 
-        public ForbiddenExceptionFilter(IHostEnvironment hostEnvironment) =>
-            _hostEnvironment = hostEnvironment;
-
-        public void OnException(ExceptionContext context)
+        public void OnActionExecuting(ActionExecutingContext context)
         {
-            var exception = context.Exception;
+        }
 
-            if (exception is ForbiddenException e)
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+            if (context.Exception is ForbiddenException httpResponseException)
             {
-                context.Result = new JsonResult(e.Message)
+                context.Result = new ObjectResult(httpResponseException.Message)
                 {
-                    StatusCode = (int)HttpStatusCode.Forbidden,
-                    Value = _hostEnvironment.IsDevelopment() ? e.Message : "Forbidden"
+                    StatusCode = StatusCodes.Status403Forbidden
                 };
+
+                context.ExceptionHandled = true;
             }
-
-
         }
     }
 

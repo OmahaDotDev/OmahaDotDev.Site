@@ -32,7 +32,7 @@ namespace OmahaDotDev.WebSite
             builder.Services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddSingleton<IExceptionFilter, ForbiddenExceptionFilter>();
+
             //builder.Services.AddEndpointsApiExplorer();
             //builder.Services.AddSwaggerGen();
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -59,7 +59,10 @@ namespace OmahaDotDev.WebSite
                     policy.Requirements.Add(new CustomAuthorizationRequirement()));
             });
 
-
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add<HttpResponseExceptionFilter>();
+            });
 
             var app = builder.Build();
 
@@ -73,31 +76,12 @@ namespace OmahaDotDev.WebSite
             }
             else
             {
-                //app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.UseExceptionHandler(c =>
-            {
-                c.Run(async context =>
-                {
-                    var exceptionHandlerPathFeature =
-                        context.Features.Get<IExceptionHandlerPathFeature>();
 
-                    var exception = exceptionHandlerPathFeature?.Error;
-
-                    if (exception is ForbiddenException e)
-                    {
-                        context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                        context.Response.WriteAsJsonAsync()
-                        {
-                            StatusCode = (int)HttpStatusCode.Forbidden,
-                            Value = _hostEnvironment.IsDevelopment() ? e.Message : "Forbidden"
-                        };
-                    }
-                });
-            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -110,12 +94,13 @@ namespace OmahaDotDev.WebSite
 
             app.MapManager();
             app.MapRazorPages();
-
-            app.MapGet("/helloworld", (AmbientContext context) =>
-                {
-                    return "Hello World!";
-                })
-                .RequireAuthorization("Custom");
+            app.MapControllers();
+            //app.MapGet("/throw", (AmbientContext context) =>
+            //{
+            //    throw new Exception("Sample exception.");
+            //    return "Hello World!";
+            //});
+            //  .RequireAuthorization("Custom");
 
             app.Run();
         }
